@@ -1,0 +1,1657 @@
+"""Script to generate the comprehensive predefined Python Knowledge Base.
+Covers 40+ key Python topics from fundamentals to advanced concepts.
+"""
+
+import json
+from pathlib import Path
+
+KNOWLEDGE_BASE = [
+    # ==================== BASICS & SYNTAX ====================
+    {
+        "id": "what_is_python",
+        "category": "Basics & Syntax",
+        "difficulty": "Beginner",
+        "question": "What is Python and what are its key features?",
+        "patterns": [
+            "What is Python?",
+            "Tell me about Python",
+            "What are the main features of Python?",
+            "Why is Python popular?",
+            "Introduction to Python",
+            "What kind of language is Python?",
+            "Who created Python?"
+        ],
+        "tags": ["python", "introduction", "features", "interpreted", "high-level", "dynamic", "guido"],
+        "summary": "Python is a high-level, interpreted, general-purpose programming language emphasizing code readability with significant indentation.",
+        "answer": (
+            "**Python** is a high-level, interpreted, dynamically typed, and garbage-collected programming language created by Guido van Rossum and first released in 1991.\n\n"
+            "### Key Features:\n"
+            "- **Simple and Readable:** Clean syntax that resembles pseudo-code.\n"
+            "- **Interpreted:** Executed statement by statement by the Python Virtual Machine (PVM).\n"
+            "- **Dynamically Typed:** Variable data types are determined automatically at runtime.\n"
+            "- **Multi-Paradigm:** Supports Object-Oriented, Functional, and Procedural paradigms.\n"
+            "- **Batteries Included:** Rich standard library covering math, networking, file I/O, and data processing.\n"
+            "- **Vast Ecosystem:** Over 500,000 packages on PyPI for web, AI, data science, automation, and DevOps."
+        ),
+        "code_example": (
+            "# Hello World in Python\n"
+            "print('Hello, Python!')\n\n"
+            "# Dynamic typing demonstration\n"
+            "x = 42             # x is an int\n"
+            "x = 'Antigravity'  # now x is a str\n"
+            "print(f'Value: {x}, Type: {type(x).__name__}')"
+        )
+    },
+    {
+        "id": "python_pep8",
+        "category": "Basics & Syntax",
+        "difficulty": "Beginner",
+        "question": "What is PEP 8 in Python?",
+        "patterns": [
+            "What is PEP 8?",
+            "Explain PEP8 style guide",
+            "Python coding standards",
+            "PEP 8 guidelines",
+            "How should I format Python code?",
+            "What are the naming conventions in PEP 8?",
+            "Code style in Python"
+        ],
+        "tags": ["pep8", "style-guide", "formatting", "conventions", "clean-code", "naming"],
+        "summary": "PEP 8 is the official style guide for writing readable, clean, and consistent Python code.",
+        "answer": (
+            "**PEP 8** (Python Enhancement Proposal 8) is the standard style guide for Python code authored by Guido van Rossum, Barry Warsaw, and Nick Coghlan.\n\n"
+            "### Core Guidelines:\n"
+            "1. **Indentation:** Use exactly 4 spaces per indentation level (never mix tabs and spaces).\n"
+            "2. **Line Length:** Maximum 79 characters per line (72 for docstrings and comments).\n"
+            "3. **Naming Conventions:**\n"
+            "   - `snake_case`: functions, methods, variables, modules\n"
+            "   - `PascalCase` (CapWords): class names, exception classes\n"
+            "   - `UPPER_SNAKE_CASE`: constants\n"
+            "   - `_single_leading_underscore`: internal helper/private intent\n"
+            "4. **Imports:** Grouped at top of file: (1) Standard library, (2) Third-party, (3) Local modules.\n"
+            "5. **Whitespace:** Avoid extraneous spaces inside brackets, before commas, or around assignment operators in keyword arguments."
+        ),
+        "code_example": (
+            "# Good PEP 8 Practice\n"
+            "MAX_CONNECTIONS = 100  # Constant: UPPER_SNAKE_CASE\n\n"
+            "class DatabaseConnector:  # Class: PascalCase\n"
+            "    def __init__(self, db_url: str):  # Method/Param: snake_case\n"
+            "        self.db_url = db_url\n\n"
+            "    def connect_to_server(self) -> bool:\n"
+            "        return True"
+        )
+    },
+    {
+        "id": "comments_and_docstrings",
+        "category": "Basics & Syntax",
+        "difficulty": "Beginner",
+        "question": "What is the difference between comments and docstrings in Python?",
+        "patterns": [
+            "Comments vs docstrings",
+            "What are docstrings in Python?",
+            "How to write comments in Python?",
+            "Difference between comment and docstring",
+            "How does __doc__ work?",
+            "Triple quotes in Python"
+        ],
+        "tags": ["comments", "docstrings", "documentation", "pep257", "__doc__", "help"],
+        "summary": "Comments (#) are developer notes ignored at runtime, while docstrings (triple quotes) are runtime-accessible documentation strings stored in the `__doc__` attribute.",
+        "answer": (
+            "- **Comments:** Begin with `#`. They are discarded during bytecode compilation and serve purely as human-readable developer notes.\n"
+            "- **Docstrings:** Enclosed in triple quotes (`'''` or `\"\"\"`) as the first statement in a module, class, method, or function. Retained at runtime in `__doc__` and utilized by `help()`, Sphinx, and IDE tooltips."
+        ),
+        "code_example": (
+            "# This is a single-line comment\n\n"
+            "def calculate_area(radius: float) -> float:\n"
+            '    """Calculate and return the area of a circle.\n\n'
+            "    Args:\n"
+            "        radius: The circle radius in meters.\n"
+            "    Returns:\n"
+            "        Area as float.\n"
+            '    """\n'
+            "    import math\n"
+            "    return math.pi * (radius ** 2)\n\n"
+            "# Inspecting the docstring at runtime\n"
+            "print(calculate_area.__doc__)"
+        )
+    },
+    {
+        "id": "walrus_operator",
+        "category": "Basics & Syntax",
+        "difficulty": "Intermediate",
+        "question": "What is the walrus operator (:=) in Python?",
+        "patterns": [
+            "What is the walrus operator in Python?",
+            "Explain the walrus operator",
+            "What does := do?",
+            "Assignment expression in Python",
+            "How to use walrus operator",
+            "Python := syntax"
+        ],
+        "tags": ["walrus", ":=", "assignment-expression", "python-3.8", "syntax", "pep572"],
+        "summary": "The walrus operator `:=` (assignment expression, Python 3.8+) allows you to assign values to a variable directly inside an expression.",
+        "answer": (
+            "The **walrus operator** `:=` is an assignment expression introduced in **Python 3.8** (PEP 572).\n\n"
+            "It assigns a value to a variable as part of a larger expression, preventing redundant function calls and streamlining loops and conditionals."
+        ),
+        "code_example": (
+            "sample_text = 'Python Programming'\n\n"
+            "# Without walrus operator:\n"
+            "# n = len(sample_text)\n"
+            "# if n > 10: ...\n\n"
+            "# With walrus operator:\n"
+            "if (n := len(sample_text)) > 10:\n"
+            "    print(f'String is long ({n} characters)')"
+        )
+    },
+    {
+        "id": "pass_break_continue",
+        "category": "Basics & Syntax",
+        "difficulty": "Beginner",
+        "question": "What is the difference between pass, break, and continue in Python?",
+        "patterns": [
+            "pass vs break vs continue",
+            "Difference between pass and continue",
+            "What does pass do in Python?",
+            "How does break work in loops?",
+            "Difference between break and continue in Python"
+        ],
+        "tags": ["pass", "break", "continue", "loops", "control-flow"],
+        "summary": "`break` terminates the loop; `continue` skips to the next iteration; `pass` is a null statement placeholder that does nothing.",
+        "answer": (
+            "- **`break`:** Terminates the nearest enclosing loop immediately, jumping to the code directly after the loop.\n"
+            "- **`continue`:** Skips the rest of the current iteration and jumps to the next cycle of the loop.\n"
+            "- **`pass`:** A null operation (no-op). Used as a syntactic placeholder when a statement is required syntactically but no code should run."
+        ),
+        "code_example": (
+            "for i in range(5):\n"
+            "    if i == 1:\n"
+            "        continue  # Skip 1\n"
+            "    if i == 4:\n"
+            "        break     # Exit before 4\n"
+            "    print(i, end=' ')  # Outputs: 0 2 3\n\n"
+            "# pass placeholder:\n"
+            "def unimplemented_api():\n"
+            "    pass  # Will implement later without syntax error"
+        )
+    },
+    {
+        "id": "type_hints_and_annotations",
+        "category": "Basics & Syntax",
+        "difficulty": "Intermediate",
+        "question": "What are type hints and type annotations in Python?",
+        "patterns": [
+            "What are type hints in Python?",
+            "How to use typing module in Python?",
+            "Does Python enforce type annotations?",
+            "Type hinting in Python",
+            "Why use type hints in Python?",
+            "Python static typing"
+        ],
+        "tags": ["typing", "type-hints", "annotations", "mypy", "pep484", "static-analysis"],
+        "summary": "Type hints (PEP 484) document expected argument and return types. Python does NOT enforce them at runtime, but static analysis tools (mypy, IDEs) verify them.",
+        "answer": (
+            "Introduced in Python 3.5+, **type hints** document function parameters, return values, and variable types.\n\n"
+            "### Key Points:\n"
+            "- **No Runtime Overhead:** Python does not validate types at runtime. They are metadata stored in `__annotations__`.\n"
+            "- **Benefits:** Enhanced IDE autocompletion, early error detection with static typecheckers like `mypy` or `pyright`, and self-documenting code.\n"
+            "- Since Python 3.9+, standard collections (`list[str]`, `dict[str, int]`) can be used directly without importing `List`, `Dict` from `typing`."
+        ),
+        "code_example": (
+            "def calculate_total(prices: list[float], tax_rate: float = 0.05) -> float:\n"
+            "    subtotal = sum(prices)\n"
+            "    return subtotal * (1 + tax_rate)\n\n"
+            "total = calculate_total([19.99, 5.50, 100.00])\n"
+            "print(f'Total: ${total:.2f}')\n"
+            "print('Annotations:', calculate_total.__annotations__)"
+        )
+    },
+
+    # ==================== DATA TYPES & STRUCTURES ====================
+    {
+        "id": "list_vs_tuple",
+        "category": "Data Structures",
+        "difficulty": "Beginner",
+        "question": "What is the difference between a list and a tuple in Python?",
+        "patterns": [
+            "Difference between list and tuple",
+            "List vs tuple",
+            "When should I use a tuple instead of a list?",
+            "Are lists mutable and tuples immutable?",
+            "List and tuple comparison",
+            "Tuples vs lists in Python"
+        ],
+        "tags": ["list", "tuple", "mutable", "immutable", "data-structures", "hashable"],
+        "summary": "Lists are mutable and use square brackets `[]`, while tuples are immutable and use parentheses `()`. Tuples are faster, memory-efficient, and hashable.",
+        "answer": (
+            "### Comparison:\n"
+            "| Feature | List `[]` | Tuple `()` |\n"
+            "| :--- | :--- | :--- |\n"
+            "| **Mutability** | **Mutable** (can add, remove, modify) | **Immutable** (cannot alter after creation) |\n"
+            "| **Syntax** | `[1, 2, 3]` | `(1, 2, 3)` |\n"
+            "| **Performance** | Slower, over-allocates memory for appends | Faster allocation and iteration |\n"
+            "| **Memory** | Uses more RAM | Uses less RAM |\n"
+            "| **Dictionary Key** | Cannot be a dict key (unhashable) | Can be a dict key if all elements are hashable |\n"
+            "| **Use Case** | Collections of dynamic, homogeneous data | Heterogeneous fixed records, read-only data |"
+        ),
+        "code_example": (
+            "# List: Mutable\n"
+            "my_list = [1, 2, 3]\n"
+            "my_list.append(4)\n"
+            "my_list[0] = 99\n"
+            "print('List:', my_list)\n\n"
+            "# Tuple: Immutable\n"
+            "my_tuple = (1, 2, 3)\n"
+            "# my_tuple[0] = 99  # Raises TypeError: 'tuple' object does not support item assignment\n"
+            "point_dict = { (10, 20): 'Point A' } # Tuples can be dict keys!\n"
+            "print('Dict with tuple key:', point_dict[(10, 20)])"
+        )
+    },
+    {
+        "id": "list_comprehensions",
+        "category": "Data Structures",
+        "difficulty": "Beginner",
+        "question": "What is a list comprehension and how does it work?",
+        "patterns": [
+            "What is a list comprehension?",
+            "How do list comprehensions work in Python?",
+            "Explain list comprehension with example",
+            "List comprehension syntax",
+            "Difference between for loop and list comprehension",
+            "How to filter in list comprehension?"
+        ],
+        "tags": ["list-comprehension", "comprehension", "lists", "iteration", "functional"],
+        "summary": "A list comprehension provides a concise and faster way to create lists based on existing iterables: `[expression for item in iterable if condition]`.",
+        "answer": (
+            "**List comprehensions** provide an elegant and concise syntax for creating new lists by transforming or filtering elements from an iterable.\n\n"
+            "### Syntax:\n"
+            "```python\n"
+            "[expression for item in iterable if condition]\n"
+            "```\n\n"
+            "### Advantages:\n"
+            "- More compact and readable than standard `for` loops.\n"
+            "- Often runs faster in CPython because bytecode loop overhead is optimized in C."
+        ),
+        "code_example": (
+            "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n"
+            "# Square of even numbers only\n"
+            "even_squares = [x**2 for x in numbers if x % 2 == 0]\n"
+            "print('Even squares:', even_squares)  # [4, 16, 36, 64, 100]\n\n"
+            "# Nested list comprehension (flattening a 2D matrix)\n"
+            "matrix = [[1, 2], [3, 4], [5, 6]]\n"
+            "flattened = [val for row in matrix for val in row]\n"
+            "print('Flattened:', flattened)  # [1, 2, 3, 4, 5, 6]"
+        )
+    },
+    {
+        "id": "dict_methods",
+        "category": "Data Structures",
+        "difficulty": "Beginner",
+        "question": "How do Python dictionaries work and what are common dict methods?",
+        "patterns": [
+            "How do dictionaries work in Python?",
+            "What is a dict in Python?",
+            "Common dictionary methods",
+            "Explain Python dictionary",
+            "How to get, set, and delete keys in dictionary",
+            "Time complexity of dictionary operations"
+        ],
+        "tags": ["dictionary", "dict", "hash-map", "hash-table", "key-value", "get", "items"],
+        "summary": "Dictionaries are hash-table based key-value mappings with O(1) average lookup, insertion, and deletion. Keys must be immutable/hashable.",
+        "answer": (
+            "A **dictionary** (`dict`) is an unordered (insertion-ordered since Python 3.7) collection of key-value pairs implemented using hash tables.\n\n"
+            "### Essential Methods:\n"
+            "- `.get(key, default)`: Safely retrieves a key without raising `KeyError`.\n"
+            "- `.keys()`, `.values()`, `.items()`: Dynamic view objects of keys, values, and (k, v) tuples.\n"
+            "- `.update(other_dict)`: Merges keys/values from another dict or iterable.\n"
+            "- `.pop(key, default)`: Removes and returns value for the key.\n"
+            "- `.setdefault(key, default)`: Returns key value; inserts default if missing."
+        ),
+        "code_example": (
+            "user = {'name': 'Alice', 'role': 'Engineer'}\n\n"
+            "# Safe lookup\n"
+            "age = user.get('age', 25)  # 25 instead of KeyError\n\n"
+            "# Iterating key-value pairs\n"
+            "for key, val in user.items():\n"
+            "    print(f'{key}: {val}')\n\n"
+            "# Dictionary merging (Python 3.9+ union operator)\n"
+            "defaults = {'theme': 'dark', 'font': 'Fira Code'}\n"
+            "config = defaults | {'theme': 'light'}\n"
+            "print('Config:', config)"
+        )
+    },
+    {
+        "id": "set_and_operations",
+        "category": "Data Structures",
+        "difficulty": "Beginner",
+        "question": "What is a set in Python and what operations can you perform on it?",
+        "patterns": [
+            "What is a set in Python?",
+            "Set operations in Python",
+            "How to remove duplicates from a list in Python?",
+            "Union intersection difference in Python sets",
+            "Explain Python set"
+        ],
+        "tags": ["set", "frozenset", "union", "intersection", "duplicates", "hash-table"],
+        "summary": "A set is an unordered collection of unique, hashable items supporting mathematical set operations like union, intersection, and difference in O(1) average time.",
+        "answer": (
+            "A **set** is a mutable, unordered collection of distinct hashable elements. It provides $O(1)$ average time complexity for membership testing (`in`).\n\n"
+            "### Mathematical Set Operations:\n"
+            "- **Union (`|` or `.union()`):** Elements in either set.\n"
+            "- **Intersection (`&` or `.intersection()`):** Elements in both sets.\n"
+            "- **Difference (`-` or `.difference()`):** Elements in set A but not B.\n"
+            "- **Symmetric Difference (`^` or `.symmetric_difference()`):** Elements in either set, but not both.\n"
+            "- **Frozenset:** An immutable variant of set that can be used as a dict key or stored in another set."
+        ),
+        "code_example": (
+            "a = {1, 2, 3, 4}\n"
+            "b = {3, 4, 5, 6}\n\n"
+            "print('Union:', a | b)          # {1, 2, 3, 4, 5, 6}\n"
+            "print('Intersection:', a & b)   # {3, 4}\n"
+            "print('Difference (a - b):', a - b)  # {1, 2}\n"
+            "print('Symmetric Diff:', a ^ b) # {1, 2, 5, 6}\n\n"
+            "# Quick deduplication of list\n"
+            "items = [1, 2, 2, 3, 4, 4, 5]\n"
+            "unique_items = list(set(items))\n"
+            "print('Unique:', unique_items)"
+        )
+    },
+    {
+        "id": "mutable_vs_immutable",
+        "category": "Data Structures",
+        "difficulty": "Intermediate",
+        "question": "What is the difference between mutable and immutable types in Python?",
+        "patterns": [
+            "Mutable vs immutable in Python",
+            "Which types are mutable and immutable in Python?",
+            "Explain mutability in Python",
+            "Can I modify immutable objects?",
+            "Why are strings immutable in Python?"
+        ],
+        "tags": ["mutability", "immutable", "mutable", "memory", "id", "hashable"],
+        "summary": "Mutable objects can be modified in place after creation (list, dict, set), while immutable objects cannot have their state altered (int, float, str, tuple, frozenset).",
+        "answer": (
+            "In Python, every value is an object with an identity (`id()`), a type (`type()`), and a value.\n\n"
+            "- **Mutable Types:** `list`, `dict`, `set`, `bytearray`, user-defined classes (by default). Their contents can be changed in-place without altering their object identity.\n"
+            "- **Immutable Types:** `int`, `float`, `bool`, `str`, `tuple`, `frozenset`, `bytes`. Once created, their value cannot be modified. Any modification creates a new object in memory."
+        ),
+        "code_example": (
+            "# Immutable behavior (string)\n"
+            "s1 = 'hello'\n"
+            "old_id = id(s1)\n"
+            "s1 += ' world'  # Creates a new string object\n"
+            "print('String ID changed:', id(s1) != old_id)  # True\n\n"
+            "# Mutable behavior (list)\n"
+            "lst = [1, 2]\n"
+            "old_lst_id = id(lst)\n"
+            "lst.append(3)   # Modified in place\n"
+            "print('List ID unchanged:', id(lst) == old_lst_id)  # True"
+        )
+    },
+    {
+        "id": "shallow_vs_deep_copy",
+        "category": "Data Structures",
+        "difficulty": "Intermediate",
+        "question": "What is the difference between shallow copy and deep copy in Python?",
+        "patterns": [
+            "Shallow copy vs deep copy",
+            "Difference between shallow and deep copy",
+            "How does copy.deepcopy work?",
+            "Explain copy module in Python",
+            "Why do nested lists share references?"
+        ],
+        "tags": ["copy", "deepcopy", "shallow-copy", "nested-objects", "references"],
+        "summary": "A shallow copy creates a new compound object but inserts references into it. A deep copy recursively duplicates all nested objects.",
+        "answer": (
+            "When dealing with compound objects (lists or dicts containing other lists or dicts):\n\n"
+            "- **Assignment (`b = a`):** Does NOT copy; it merely binds a new variable name to the identical memory address.\n"
+            "- **Shallow Copy (`copy.copy(a)` or `a.copy()` or `a[:]`):** Constructs a new container, but populates it with references to the child objects found in the original.\n"
+            "- **Deep Copy (`copy.deepcopy(a)`):** Constructs a new container and recursively inserts copies of the objects found in the original."
+        ),
+        "code_example": (
+            "import copy\n\n"
+            "original = [[1, 2, 3], [4, 5, 6]]\n\n"
+            "shallow = copy.copy(original)\n"
+            "deep = copy.deepcopy(original)\n\n"
+            "# Modify nested list in original\n"
+            "original[0][0] = 'CHANGED'\n\n"
+            "print('Shallow copy affected:', shallow[0][0])  # 'CHANGED'\n"
+            "print('Deep copy unaffected:', deep[0][0])      # 1"
+        )
+    },
+    {
+        "id": "string_formatting",
+        "category": "Data Structures",
+        "difficulty": "Beginner",
+        "question": "How do you format strings in Python (f-strings vs str.format vs %)?",
+        "patterns": [
+            "How to format strings in Python?",
+            "What are f-strings in Python?",
+            "Difference between f-string and format",
+            "String interpolation in Python",
+            "How to use f strings"
+        ],
+        "tags": ["strings", "f-strings", "format", "interpolation", "pep498"],
+        "summary": "f-strings (introduced in Python 3.6) are the modern, readable, and fastest way to format strings: `f'Hello {name}'`.",
+        "answer": (
+            "Python offers three main approaches for string formatting:\n\n"
+            "1. **f-Strings (`f'...'`):** Modern standard (Python 3.6+). Supports inline expressions, format specifiers, and `=` debugging (Python 3.8+).\n"
+            "2. **`str.format()`:** Explicit method `'{0} is {1}'.format(a, b)`.\n"
+            "3. **`%` formatting:** C-style `printf` formatting `%s, %d` (legacy)."
+        ),
+        "code_example": (
+            "name = 'Python'\n"
+            "version = 3.11\n"
+            "price = 49.998\n\n"
+            "# f-strings with precision formatting\n"
+            "print(f'{name} v{version:.1f} costs ${price:.2f}')\n\n"
+            "# f-string with debugging syntax (3.8+)\n"
+            "x = 10\n"
+            "print(f'{x * 2 = }')  # Prints 'x * 2 = 20'"
+        )
+    },
+    {
+        "id": "sorted_vs_sort",
+        "category": "Data Structures",
+        "difficulty": "Beginner",
+        "question": "What is the difference between sorted() and list.sort() in Python?",
+        "patterns": [
+            "sorted() vs list.sort()",
+            "Difference between sort and sorted in Python",
+            "How to sort a list in Python?",
+            "In place sorting vs returning new list",
+            "Sort dictionary by key or value"
+        ],
+        "tags": ["sort", "sorted", "timsort", "in-place", "lists"],
+        "summary": "`list.sort()` sorts the list in-place and returns `None`, while `sorted()` is a built-in that returns a new sorted list from any iterable without modifying the original.",
+        "answer": (
+            "- **`list.sort()`:** Modifies the list in-place and returns `None`. Only works on list objects.\n"
+            "- **`sorted(iterable)`:** Accepts any iterable (tuple, set, dict, generator) and returns a **new sorted list**, preserving the original iterable unmodified.\n\n"
+            "Both use **Timsort** ($O(n \\log n)$ average/worst-case time complexity, stable sorting)."
+        ),
+        "code_example": (
+            "numbers = [5, 2, 9, 1]\n\n"
+            "# sorted() creates a new list\n"
+            "new_list = sorted(numbers)\n"
+            "print('Original:', numbers)  # [5, 2, 9, 1]\n"
+            "print('New sorted:', new_list) # [1, 2, 5, 9]\n\n"
+            "# list.sort() mutates in place\n"
+            "numbers.sort()\n"
+            "print('Mutated in-place:', numbers) # [1, 2, 5, 9]"
+        )
+    },
+
+    # ==================== OPERATORS & CONTROL FLOW ====================
+    {
+        "id": "is_vs_double_equals",
+        "category": "Operators & Logic",
+        "difficulty": "Beginner",
+        "question": "What is the difference between 'is' and '==' in Python?",
+        "patterns": [
+            "Difference between is and ==",
+            "is vs ==",
+            "When should I use is vs == in Python?",
+            "Identity vs equality in Python",
+            "Why is 1000 is 1000 False?",
+            "Object identity vs value equality"
+        ],
+        "tags": ["is", "==", "equality", "identity", "id", "comparison"],
+        "summary": "`==` checks for value equality, while `is` checks for object identity (whether two variables refer to the exact same object in memory).",
+        "answer": (
+            "- **`==` (Value Equality):** Invokes the `__eq__()` method to determine if two objects contain equivalent values.\n"
+            "- **`is` (Reference Identity):** Compares memory addresses (`id(a) == id(b)`). Returns `True` only if both variables point to the exact same object in memory.\n\n"
+            "> **Pro Tip:** Always compare singletons like `None` with `is`: `if var is None:`."
+        ),
+        "code_example": (
+            "a = [1, 2, 3]\n"
+            "b = [1, 2, 3]\n"
+            "c = a\n\n"
+            "print('a == b:', a == b)  # True (equal values)\n"
+            "print('a is b:', a is b)  # False (different objects in memory)\n"
+            "print('a is c:', a is c)  # True (same reference)\n\n"
+            "# Checking for None\n"
+            "val = None\n"
+            "print('val is None:', val is None)  # True"
+        )
+    },
+    {
+        "id": "truthy_and_falsy",
+        "category": "Operators & Logic",
+        "difficulty": "Beginner",
+        "question": "What are truthy and falsy values in Python?",
+        "patterns": [
+            "What are truthy and falsy values?",
+            "Truthy vs falsy in Python",
+            "Which values evaluate to False in Python?",
+            "Boolean evaluation in Python",
+            "How does bool() work on objects?"
+        ],
+        "tags": ["truthy", "falsy", "bool", "boolean", "conditionals", "if"],
+        "summary": "Falsy values evaluate to False in boolean contexts: None, False, zero numbers (0, 0.0), and empty collections ('', [], {}, set()). All other values are truthy.",
+        "answer": (
+            "In Python, any object can be tested for truth value inside `if` or `while` statements.\n\n"
+            "### Standard Falsy Values:\n"
+            "- Constants: `None`, `False`\n"
+            "- Zero numerics: `0`, `0.0`, `0j`, `Decimal(0)`, `Fraction(0, 1)`\n"
+            "- Empty sequences/collections: `''`, `()`, `[]`, `{}`, `set()`, `range(0)`\n\n"
+            "### Custom Objects:\n"
+            "By default, custom class instances are truthy unless `__bool__()` or `__len__()` returns `False` or `0`."
+        ),
+        "code_example": (
+            "items = []\n\n"
+            "# Pythonic way to test if collection is non-empty:\n"
+            "if not items:\n"
+            "    print('List is empty!')\n\n"
+            "# Testing truthiness explicitly with bool()\n"
+            "print(bool(0))        # False\n"
+            "print(bool('hello'))  # True\n"
+            "print(bool([]))       # False"
+        )
+    },
+    {
+        "id": "ternary_operator",
+        "category": "Operators & Logic",
+        "difficulty": "Beginner",
+        "question": "Does Python have a ternary conditional operator?",
+        "patterns": [
+            "Ternary operator in Python",
+            "Conditional expression in Python",
+            "How to write inline if else in Python?",
+            "Python ternary syntax",
+            "One line if statement Python"
+        ],
+        "tags": ["ternary", "conditional-expression", "if-else", "syntax"],
+        "summary": "Yes, Python's ternary conditional operator syntax is: `x if condition else y`.",
+        "answer": (
+            "Python supports conditional expressions (often called the ternary operator) introduced in PEP 308.\n\n"
+            "### Syntax:\n"
+            "```python\n"
+            "value_if_true if condition else value_if_false\n"
+            "```"
+        ),
+        "code_example": (
+            "age = 20\n"
+            "status = 'Adult' if age >= 18 else 'Minor'\n"
+            "print(status)  # Adult"
+        )
+    },
+
+    # ==================== FUNCTIONS ====================
+    {
+        "id": "args_and_kwargs",
+        "category": "Functions",
+        "difficulty": "Beginner",
+        "question": "What are *args and **kwargs in Python functions?",
+        "patterns": [
+            "What is *args and **kwargs?",
+            "Explain *args and **kwargs in Python",
+            "Difference between args and kwargs",
+            "Variable positional and keyword arguments",
+            "How to accept arbitrary arguments in Python?"
+        ],
+        "tags": ["args", "kwargs", "*args", "**kwargs", "functions", "arguments", "parameters"],
+        "summary": "`*args` passes variable-length positional arguments as a tuple, and `**kwargs` passes variable-length keyword arguments as a dictionary.",
+        "answer": (
+            "- **`*args` (Positional Arguments):** The `*` unpacking operator gathers arbitrary positional arguments into a `tuple`.\n"
+            "- **`**kwargs` (Keyword Arguments):** The `**` unpacking operator gathers arbitrary named/keyword arguments into a `dict`.\n\n"
+            "### Parameter Ordering Rule in Definitions:\n"
+            "1. Standard positional parameters\n"
+            "2. Default parameters\n"
+            "3. `*args`\n"
+            "4. Keyword-only parameters\n"
+            "5. `**kwargs`"
+        ),
+        "code_example": (
+            "def demo_func(required, *args, default_val=10, **kwargs):\n"
+            "    print('Required:', required)\n"
+            "    print('Args tuple:', args)\n"
+            "    print('Kwargs dict:', kwargs)\n\n"
+            "demo_func('hello', 1, 2, 3, mode='fast', debug=True)"
+        )
+    },
+    {
+        "id": "lambda_functions",
+        "category": "Functions",
+        "difficulty": "Beginner",
+        "question": "What is a lambda function in Python?",
+        "patterns": [
+            "What is a lambda function in Python?",
+            "Anonymous function in Python",
+            "How to use lambda in Python?",
+            "Lambda vs def function",
+            "When should I use lambda?"
+        ],
+        "tags": ["lambda", "anonymous-function", "functional", "sorted", "map"],
+        "summary": "A lambda function is a small, anonymous inline function restricted to a single expression: `lambda arguments: expression`.",
+        "answer": (
+            "A **lambda function** is a syntactically restricted anonymous function defined with the `lambda` keyword instead of `def`.\n\n"
+            "### Syntax:\n"
+            "```python\n"
+            "lambda arg1, arg2: expression\n"
+            "```\n\n"
+            "### Characteristics:\n"
+            "- Can take any number of arguments, but can contain only **one expression** (no multi-line statements or assignments).\n"
+            "- Implicitly returns the evaluation of the expression.\n"
+            "- Most commonly used as custom sorting keys (`sorted(..., key=lambda ...)`) or callback predicates."
+        ),
+        "code_example": (
+            "# Sorting list of tuples by second element\n"
+            "students = [('Alice', 88), ('Bob', 95), ('Charlie', 78)]\n"
+            "students_sorted = sorted(students, key=lambda student: student[1], reverse=True)\n"
+            "print('Sorted by score:', students_sorted)"
+        )
+    },
+    {
+        "id": "mutable_default_arguments",
+        "category": "Functions",
+        "difficulty": "Intermediate",
+        "question": "Why is using a mutable default argument dangerous in Python?",
+        "patterns": [
+            "Mutable default argument pitfall",
+            "Why is def f(a=[]) bad in Python?",
+            "Default argument binding in Python",
+            "Python mutable default argument bug",
+            "How to avoid default list argument bug?"
+        ],
+        "tags": ["mutable-default", "pitfall", "functions", "default-arguments", "bug"],
+        "summary": "Default arguments are evaluated once when the function is defined, not each time it is called. A mutable default (like []) is shared across all invocations.",
+        "answer": (
+            "In Python, **default parameter values are evaluated once at function definition time** (when the `def` statement executes), not at call time.\n\n"
+            "If you use a mutable object (such as `list` or `dict`) as a default, every call that relies on the default will mutate the **exact same shared object** across calls.\n\n"
+            "### Recommended Solution:\n"
+            "Use `None` as the sentinel default and create a fresh instance inside the function body."
+        ),
+        "code_example": (
+            "# WRONG (Buggy):\n"
+            "# def append_to(element, target=[]):\n"
+            "#     target.append(element)\n"
+            "#     return target\n\n"
+            "# RIGHT (Safe idiom):\n"
+            "def append_to(element, target=None):\n"
+            "    if target is None:\n"
+            "        target = []\n"
+            "    target.append(element)\n"
+            "    return target\n\n"
+            "print(append_to(1))  # [1]\n"
+            "print(append_to(2))  # [2] (isolated, not [1, 2])"
+        )
+    },
+    {
+        "id": "variable_scope_legb",
+        "category": "Functions",
+        "difficulty": "Intermediate",
+        "question": "What is the LEGB rule for variable scope in Python?",
+        "patterns": [
+            "What is LEGB rule?",
+            "Python variable scope explained",
+            "Local vs global vs enclosing scope",
+            "What is nonlocal keyword?",
+            "How does Python search for variable names?"
+        ],
+        "tags": ["scope", "legb", "global", "nonlocal", "namespaces"],
+        "summary": "Python resolves variable names in LEGB order: Local -> Enclosing -> Global -> Built-in.",
+        "answer": (
+            "When a variable name is referenced, Python searches four namespace levels in order:\n\n"
+            "1. **L - Local:** Names assigned within the current function.\n"
+            "2. **E - Enclosing:** Names in the local scope of any enclosing functions (closures).\n"
+            "3. **G - Global:** Names assigned at the top-level of the module file.\n"
+            "4. **B - Built-in:** Built-in module pre-loaded with Python (e.g. `len`, `range`, `print`).\n\n"
+            "- Use `global var_name` to modify module-level variables.\n"
+            "- Use `nonlocal var_name` to modify variables in enclosing non-global scopes."
+        ),
+        "code_example": (
+            "x = 'global_x'\n\n"
+            "def outer():\n"
+            "    x = 'enclosing_x'\n"
+            "    def inner():\n"
+            "        nonlocal x\n"
+            "        x = 'modified_by_inner'\n"
+            "    inner()\n"
+            "    print('Outer x:', x)  # modified_by_inner\n\n"
+            "outer()"
+        )
+    },
+
+    # ==================== ADVANCED FUNCTIONAL ====================
+    {
+        "id": "decorators",
+        "category": "Advanced Functional",
+        "difficulty": "Intermediate",
+        "question": "What is a decorator in Python and how do you create one?",
+        "patterns": [
+            "What is a decorator in Python?",
+            "How do decorators work in Python?",
+            "Explain Python decorators with example",
+            "How to write a custom decorator?",
+            "What does @ do in Python?",
+            "Why use functools.wraps in a decorator?"
+        ],
+        "tags": ["decorator", "@", "functools", "wraps", "higher-order-function", "metaprogramming"],
+        "summary": "A decorator is a callable that takes another function as input, extends its behavior without modifying the original code, and returns a callable.",
+        "answer": (
+            "A **decorator** is a design pattern implemented as a higher-order function that wraps another function to augment its behavior.\n\n"
+            "The syntax `@my_decorator` placed above a function definition is syntactic sugar for:\n"
+            "```python\n"
+            "my_func = my_decorator(my_func)\n"
+            "```\n\n"
+            "> **Best Practice:** Always use `@functools.wraps(func)` inside your decorator to preserve the original function's name and docstring."
+        ),
+        "code_example": (
+            "import time\n"
+            "from functools import wraps\n\n"
+            "def time_tracker(func):\n"
+            "    @wraps(func)\n"
+            "    def wrapper(*args, **kwargs):\n"
+            "        start = time.perf_counter()\n"
+            "        result = func(*args, **kwargs)\n"
+            "        duration = time.perf_counter() - start\n"
+            "        print(f'{func.__name__} executed in {duration:.6f}s')\n"
+            "        return result\n"
+            "    return wrapper\n\n"
+            "@time_tracker\n"
+            "def compute_sum(n: int):\n"
+            "    return sum(range(n))\n\n"
+            "print('Result:', compute_sum(100000))"
+        )
+    },
+    {
+        "id": "generators_and_yield",
+        "category": "Advanced Functional",
+        "difficulty": "Intermediate",
+        "question": "What are generators and the yield keyword in Python?",
+        "patterns": [
+            "What is a generator in Python?",
+            "What is yield in Python?",
+            "Difference between yield and return",
+            "How do generator functions work?",
+            "Why use generators instead of lists?",
+            "Memory efficiency of generators"
+        ],
+        "tags": ["generator", "yield", "iterator", "lazy-evaluation", "memory", "streams"],
+        "summary": "A generator is a function that produces a sequence of values lazily using the `yield` keyword, maintaining its execution state between iterations to save memory.",
+        "answer": (
+            "A **generator function** looks like a normal function but uses `yield` instead of `return`.\n\n"
+            "- When invoked, it returns a **generator iterator** without immediately executing code.\n"
+            "- When `next()` is called, the function executes until it encounters `yield`, which pauses execution and produces a value.\n"
+            "- On the subsequent `next()`, it resumes directly from where it paused.\n\n"
+            "### Benefits:\n"
+            "- **Lazy Evaluation:** Computes values on-demand.\n"
+            "- **Minimal Memory Footprint:** Can process infinite sequences or multi-gigabyte files without loading them entirely into RAM."
+        ),
+        "code_example": (
+            "# Fibonacci generator (infinite sequence support)\n"
+            "def fibonacci(limit):\n"
+            "    a, b = 0, 1\n"
+            "    while a < limit:\n"
+            "        yield a\n"
+            "        a, b = b, a + b\n\n"
+            "for num in fibonacci(50):\n"
+            "    print(num, end=' ')  # 0 1 1 2 3 5 8 13 21 34"
+        )
+    },
+    {
+        "id": "iterators_protocol",
+        "category": "Advanced Functional",
+        "difficulty": "Intermediate",
+        "question": "How does the iterator protocol work in Python (__iter__ and __next__)?",
+        "patterns": [
+            "What is an iterator in Python?",
+            "Difference between iterable and iterator",
+            "How to implement an iterator in Python?",
+            "Explain __iter__ and __next__",
+            "StopIteration exception"
+        ],
+        "tags": ["iterator", "iterable", "__iter__", "__next__", "StopIteration", "protocol"],
+        "summary": "An iterable implements __iter__() returning an iterator. An iterator implements __next__() returning values one by one and raising StopIteration when exhausted.",
+        "answer": (
+            "- **Iterable:** Any object capable of returning its members one at a time (e.g. `list`, `str`, `dict`). Implements `__iter__()`.\n"
+            "- **Iterator:** The agent performing the traversal. Implements both `__iter__()` (returns `self`) and `__next__()` (produces next item or raises `StopIteration`)."
+        ),
+        "code_example": (
+            "class CountDown:\n"
+            "    def __init__(self, start):\n"
+            "        self.current = start\n\n"
+            "    def __iter__(self):\n"
+            "        return self\n\n"
+            "    def __next__(self):\n"
+            "        if self.current <= 0:\n"
+            "            raise StopIteration\n"
+            "        val = self.current\n"
+            "        self.current -= 1\n"
+            "        return val\n\n"
+            "for n in CountDown(3):\n"
+            "    print(n)  # 3, 2, 1"
+        )
+    },
+    {
+        "id": "generator_expressions",
+        "category": "Advanced Functional",
+        "difficulty": "Intermediate",
+        "question": "What is the difference between generator expressions and list comprehensions?",
+        "patterns": [
+            "Generator expression vs list comprehension",
+            "Difference between () and [] in comprehensions",
+            "When to use generator expressions in Python?",
+            "Memory usage generator vs list"
+        ],
+        "tags": ["generator-expression", "list-comprehension", "memory", "lazy-evaluation"],
+        "summary": "List comprehensions create full lists in memory at once `[x for x in ...]`, while generator expressions produce items lazily on demand `(x for x in ...)`, consuming negligible memory.",
+        "answer": (
+            "- **List Comprehension `[x for x in seq]`:** Computes all elements up front and stores them in memory.\n"
+            "- **Generator Expression `(x for x in seq)`:** Returns a generator object that computes one item at a time only when requested.\n\n"
+            "Use generator expressions when computing large sums, finding first matching items, or piping data through processing stages."
+        ),
+        "code_example": (
+            "import sys\n\n"
+            "# 1 million numbers\n"
+            "list_comp = [x * 2 for x in range(1000000)]\n"
+            "gen_exp = (x * 2 for x in range(1000000))\n\n"
+            "print('List memory (bytes):', sys.getsizeof(list_comp))  # ~8 MB\n"
+            "print('Gen memory (bytes):', sys.getsizeof(gen_exp))    # ~100 bytes!\n"
+            "print('First item from generator:', next(gen_exp))"
+        )
+    },
+
+    # ==================== OBJECT-ORIENTED PROGRAMMING (OOP) ====================
+    {
+        "id": "classes_and_init",
+        "category": "Object-Oriented Programming",
+        "difficulty": "Beginner",
+        "question": "How do classes, objects, and __init__ work in Python?",
+        "patterns": [
+            "How to create a class in Python?",
+            "What is __init__ in Python?",
+            "What is self in Python?",
+            "Classes and objects in Python",
+            "Explain Python constructors"
+        ],
+        "tags": ["class", "object", "__init__", "self", "oop", "constructor", "instance"],
+        "summary": "A class is a blueprint for objects. `__init__` is the constructor method called upon instantiation, and `self` represents the instance itself.",
+        "answer": (
+            "In Python, classes are defined with the `class` keyword.\n\n"
+            "- **`__init__`:** The initializer method invoked automatically when a new instance is created to set initial attributes.\n"
+            "- **`self`:** An explicit reference to the current instance being manipulated. It allows access to instance attributes and methods."
+        ),
+        "code_example": (
+            "class Book:\n"
+            "    def __init__(self, title: str, author: str):\n"
+            "        self.title = title\n"
+            "        self.author = author\n\n"
+            "    def describe(self) -> str:\n"
+            "        return f'{self.title} by {self.author}'\n\n"
+            "b = Book('Fluent Python', 'Luciano Ramalho')\n"
+            "print(b.describe())"
+        )
+    },
+    {
+        "id": "inheritance_and_mro",
+        "category": "Object-Oriented Programming",
+        "difficulty": "Intermediate",
+        "question": "How does inheritance and Method Resolution Order (MRO) work in Python?",
+        "patterns": [
+            "Inheritance in Python",
+            "What is MRO in Python?",
+            "Method Resolution Order",
+            "How does super() work in Python?",
+            "Multiple inheritance in Python",
+            "C3 linearisation algorithm"
+        ],
+        "tags": ["inheritance", "super", "mro", "multiple-inheritance", "oop", "c3"],
+        "summary": "Inheritance allows child classes to reuse parent behavior. Python resolves method lookups via the C3 linearization algorithm accessible via `Class.mro()`.",
+        "answer": (
+            "Python supports both single and multiple inheritance.\n\n"
+            "- **`super()`:** Dynamically delegates method calls to the next class in the MRO hierarchy.\n"
+            "- **MRO (Method Resolution Order):** The deterministic order Python uses to search for methods/attributes in inheritance graphs, calculated using the **C3 Linearization** algorithm.\n"
+            "- Inspect MRO anytime with `ClassName.mro()` or `ClassName.__mro__`."
+        ),
+        "code_example": (
+            "class Animal:\n"
+            "    def speak(self):\n"
+            "        return 'Generic animal sound'\n\n"
+            "class Dog(Animal):\n"
+            "    def speak(self):\n"
+            "        parent_speak = super().speak()\n"
+            "        return f'{parent_speak} -> Woof!'\n\n"
+            "dog = Dog()\n"
+            "print(dog.speak())\n"
+            "print('MRO:', Dog.mro())"
+        )
+    },
+    {
+        "id": "instance_class_static_methods",
+        "category": "Object-Oriented Programming",
+        "difficulty": "Intermediate",
+        "question": "What is the difference between instance, class, and static methods?",
+        "patterns": [
+            "Instance vs class vs static method",
+            "Difference between @classmethod and @staticmethod",
+            "When to use staticmethod in Python?",
+            "Explain @classmethod in Python",
+            "What is cls vs self?"
+        ],
+        "tags": ["classmethod", "staticmethod", "methods", "decorator", "cls", "self"],
+        "summary": "Instance methods take `self` and access instance state; class methods take `cls` and access class state; static methods take neither and behave like regular functions namespaced inside a class.",
+        "answer": (
+            "### Comparison:\n"
+            "1. **Instance Method:** First parameter is `self`. Has full access to the instance and class state.\n"
+            "2. **Class Method (`@classmethod`):** First parameter is `cls`. Used frequently for alternative constructors or factory methods.\n"
+            "3. **Static Method (`@staticmethod`):** Neither `self` nor `cls` is passed. A pure utility function logically scoped within a class namespace."
+        ),
+        "code_example": (
+            "class DateConverter:\n"
+            "    def __init__(self, year, month, day):\n"
+            "        self.year = year\n"
+            "        self.month = month\n"
+            "        self.day = day\n\n"
+            "    @classmethod\n"
+            "    def from_dash_string(cls, date_str: str):\n"
+            "        # Factory constructor: Alternative initializer\n"
+            "        y, m, d = map(int, date_str.split('-'))\n"
+            "        return cls(y, m, d)\n\n"
+            "    @staticmethod\n"
+            "    def is_valid_year(year: int) -> bool:\n"
+            "        return 1900 <= year <= 2100\n\n"
+            "d = DateConverter.from_dash_string('2026-11-15')\n"
+            "print(f'{d.year}/{d.month}/{d.day}')\n"
+            "print('Valid year:', DateConverter.is_valid_year(2026))"
+        )
+    },
+    {
+        "id": "magic_dunder_methods",
+        "category": "Object-Oriented Programming",
+        "difficulty": "Intermediate",
+        "question": "What are magic (dunder) methods in Python?",
+        "patterns": [
+            "What are dunder methods in Python?",
+            "Magic methods in Python",
+            "Difference between __str__ and __repr__",
+            "Operator overloading in Python",
+            "Special methods in Python classes"
+        ],
+        "tags": ["dunder", "magic-methods", "operator-overloading", "__str__", "__repr__", "__len__"],
+        "summary": "Dunder (double underscore) methods allow user-defined classes to emulate built-in behaviors like string representation, arithmetic operations, and length checks.",
+        "answer": (
+            "**Dunder methods** (special methods with leading and trailing `__`) enable Python's operator overloading and object model protocols.\n\n"
+            "### Common Dunder Methods:\n"
+            "- `__str__`: Readable string for end users (`print(obj)` or `str(obj)`).\n"
+            "- `__repr__`: Unambiguous code representation for developers (`repr(obj)`).\n"
+            "- `__len__`: Returns length for `len(obj)`.\n"
+            "- `__eq__`, `__lt__`: Implements `==`, `<` comparison operators.\n"
+            "- `__add__`, `__sub__`: Implements `+`, `-` operators."
+        ),
+        "code_example": (
+            "class Vector:\n"
+            "    def __init__(self, x, y):\n"
+            "        self.x = x\n"
+            "        self.y = y\n\n"
+            "    def __add__(self, other):\n"
+            "        return Vector(self.x + other.x, self.y + other.y)\n\n"
+            "    def __repr__(self):\n"
+            "        return f'Vector({self.x}, {self.y})'\n\n"
+            "v1 = Vector(2, 4)\n"
+            "v2 = Vector(3, 1)\n"
+            "print(v1 + v2)  # Vector(5, 5)"
+        )
+    },
+    {
+        "id": "property_decorator",
+        "category": "Object-Oriented Programming",
+        "difficulty": "Intermediate",
+        "question": "How does the @property decorator work in Python?",
+        "patterns": [
+            "What is @property in Python?",
+            "Getters and setters in Python",
+            "How to use property decorator?",
+            "Encapsulation with property in Python",
+            "Explain @property getter setter deleter"
+        ],
+        "tags": ["property", "getter", "setter", "encapsulation", "oop"],
+        "summary": "The `@property` decorator allows class methods to be accessed like attributes while supporting validation, computation, and encapsulation.",
+        "answer": (
+            "In Python, getter and setter methods are made pythonic using the `@property` decorator.\n\n"
+            "It turns a method call into an attribute lookup, enabling backward-compatible refactoring and transparent data validation without changing client calling code (`obj.x` instead of `obj.get_x()`)."
+        ),
+        "code_example": (
+            "class Temperature:\n"
+            "    def __init__(self, celsius: float):\n"
+            "        self._celsius = celsius\n\n"
+            "    @property\n"
+            "    def fahrenheit(self) -> float:\n"
+            "        return (self._celsius * 9/5) + 32\n\n"
+            "    @fahrenheit.setter\n"
+            "    def fahrenheit(self, value: float):\n"
+            "        self._celsius = (value - 32) * 5/9\n\n"
+            "t = Temperature(25)\n"
+            "print('In Fahrenheit:', t.fahrenheit)  # 77.0\n"
+            "t.fahrenheit = 212\n"
+            "print('In Celsius:', t._celsius)       # 100.0"
+        )
+    },
+    {
+        "id": "python_dataclasses",
+        "category": "Object-Oriented Programming",
+        "difficulty": "Intermediate",
+        "question": "What are dataclasses in Python?",
+        "patterns": [
+            "What is dataclass in Python?",
+            "How to use @dataclass?",
+            "Explain Python dataclasses",
+            "Dataclass vs namedtuple vs normal class",
+            "How to create a data class in Python?"
+        ],
+        "tags": ["dataclass", "dataclasses", "oop", "boilerplate", "pep557"],
+        "summary": "The `@dataclass` decorator (Python 3.7+) automatically generates boilerplate special methods like `__init__`, `__repr__`, and `__eq__` based on typed class attributes.",
+        "answer": (
+            "A **dataclass** eliminates repetitive boilerplate for classes whose primary purpose is storing data.\n\n"
+            "### Automatically Generated Methods:\n"
+            "- `__init__()` with parameters matching annotated attributes.\n"
+            "- `__repr__()` for clear visual string output.\n"
+            "- `__eq__()` for attribute-wise equality comparison.\n"
+            "- Optional parameters: `frozen=True` (immutable), `order=True` (comparison operators)."
+        ),
+        "code_example": (
+            "from dataclasses import dataclass, field\n\n"
+            "@dataclass(order=True)\n"
+            "class Product:\n"
+            "    name: str = field(compare=False)\n"
+            "    price: float\n"
+            "    quantity: int = 1\n\n"
+            "    def total_cost(self) -> float:\n"
+            "        return self.price * self.quantity\n\n"
+            "p1 = Product('Keyboard', 79.99, 2)\n"
+            "p2 = Product('Mouse', 29.99, 1)\n"
+            "print(p1)  # Product(name='Keyboard', price=79.99, quantity=2)\n"
+            "print('Total:', p1.total_cost())"
+        )
+    },
+    {
+        "id": "duck_typing",
+        "category": "Object-Oriented Programming",
+        "difficulty": "Intermediate",
+        "question": "What is Duck Typing and EAFP in Python?",
+        "patterns": [
+            "What is duck typing in Python?",
+            "Explain duck typing",
+            "What is EAFP in Python?",
+            "Easier to ask forgiveness than permission",
+            "Duck typing vs type checking"
+        ],
+        "tags": ["duck-typing", "eafp", "polymorphism", "philosophy", "pythonic"],
+        "summary": "Duck typing means an object's suitability is determined by the presence of certain methods and properties, rather than its actual type ('If it walks like a duck and quacks like a duck, it is a duck').",
+        "answer": (
+            "- **Duck Typing:** Python does not check whether an object inherits from a specific type before using it; it simply attempts the operation.\n"
+            "- **EAFP (Easier to Ask for Forgiveness than Permission):** The Pythonic coding style that assumes valid keys or attributes exist, catching exceptions with `try...except` rather than pre-checking with `if hasattr` or `if key in dict`."
+        ),
+        "code_example": (
+            "class Duck:\n"
+            "    def quack(self):\n"
+            "        print('Quack!')\n\n"
+            "class Person:\n"
+            "    def quack(self):\n"
+            "        print('I am imitating a duck!')\n\n"
+            "def make_it_quack(entity):\n"
+            "    # Duck typing: doesn't care if entity is Duck or Person\n"
+            "    entity.quack()\n\n"
+            "make_it_quack(Duck())\n"
+            "make_it_quack(Person())"
+        )
+    },
+
+    # ==================== ERROR & EXCEPTION HANDLING ====================
+    {
+        "id": "exception_handling",
+        "category": "Exception Handling",
+        "difficulty": "Beginner",
+        "question": "How does exception handling work in Python (try, except, else, finally)?",
+        "patterns": [
+            "Exception handling in Python",
+            "How to use try except in Python?",
+            "Difference between else and finally in try except",
+            "Explain try except else finally",
+            "How to handle errors in Python?"
+        ],
+        "tags": ["exceptions", "try", "except", "finally", "else", "error-handling"],
+        "summary": "Exceptions are handled with try/except blocks. `else` runs if no exception occurred, and `finally` always runs regardless of outcomes.",
+        "answer": (
+            "Python handles errors gracefully through structured exception handling:\n\n"
+            "- **`try`:** Contains code that might raise an exception.\n"
+            "- **`except [ExceptionType]`:** Catches and handles specific exceptions.\n"
+            "- **`else`:** Executes *only* if the `try` block ran without raising any exceptions.\n"
+            "- **`finally`:** Always executes before leaving the block, ideal for resource cleanup.\n\n"
+            "> **Tip:** Avoid bare `except:` because it catches system-exiting exceptions like `KeyboardInterrupt`."
+        ),
+        "code_example": (
+            "def safe_divide(a, b):\n"
+            "    try:\n"
+            "        result = a / b\n"
+            "    except ZeroDivisionError as err:\n"
+            "        print('Error caught:', err)\n"
+            "        return None\n"
+            "    else:\n"
+            "        print('Division successful!')\n"
+            "        return result\n"
+            "    finally:\n"
+            "        print('Execution finished.')\n\n"
+            "print(safe_divide(10, 2))\n"
+            "print(safe_divide(10, 0))"
+        )
+    },
+    {
+        "id": "custom_exceptions",
+        "category": "Exception Handling",
+        "difficulty": "Intermediate",
+        "question": "How do you create a custom exception in Python?",
+        "patterns": [
+            "How to create custom exception in Python?",
+            "User defined exceptions in Python",
+            "Inheriting from Exception class",
+            "Custom error class in Python",
+            "How to raise custom errors?"
+        ],
+        "tags": ["custom-exceptions", "exceptions", "raise", "inheritance", "oop"],
+        "summary": "Create custom exceptions by subclassing the built-in `Exception` (or a more specific standard exception) and raise them with `raise`.",
+        "answer": (
+            "Custom exceptions allow domain-specific error handling in libraries and applications.\n\n"
+            "Always inherit from `Exception` (not `BaseException`, which is reserved for core system events like `SystemExit`)."
+        ),
+        "code_example": (
+            "class InvalidAgeError(Exception):\n"
+            '    """Raised when an age value is outside logical bounds."""\n'
+            "    def __init__(self, age: int, message: str = 'Age must be between 0 and 120'):\n"
+            "        self.age = age\n"
+            "        super().__init__(f'{message} (got {age})')\n\n"
+            "def register_voter(age: int):\n"
+            "    if age < 18 or age > 120:\n"
+            "        raise InvalidAgeError(age)\n"
+            "    return 'Voter registered!'\n\n"
+            "try:\n"
+            "    register_voter(150)\n"
+            "except InvalidAgeError as e:\n"
+            "    print('Custom caught:', e)"
+        )
+    },
+
+    # ==================== FILE HANDLING & CONTEXT MANAGERS ====================
+    {
+        "id": "context_managers_and_with",
+        "category": "File I/O & Context Managers",
+        "difficulty": "Intermediate",
+        "question": "What is a context manager and the 'with' statement in Python?",
+        "patterns": [
+            "What is a context manager in Python?",
+            "How does the with statement work in Python?",
+            "Explain __enter__ and __exit__",
+            "Why use with open() for files?",
+            "How to write a custom context manager?"
+        ],
+        "tags": ["context-manager", "with", "__enter__", "__exit__", "contextlib", "files"],
+        "summary": "Context managers guarantee resource allocation and cleanup using `with`. They implement `__enter__()` and `__exit__()` (or use `@contextlib.contextmanager`).",
+        "answer": (
+            "The `with` statement encapsulates common `try...finally` resource management patterns.\n\n"
+            "It guarantees that teardown actions (e.g. closing files, releasing thread locks, terminating network connections) are always executed, even if exceptions occur inside the block."
+        ),
+        "code_example": (
+            "from contextlib import contextmanager\n\n"
+            "# Custom context manager using contextlib generator\n"
+            "@contextmanager\n"
+            "def transaction_scope(db_name: str):\n"
+            "    print(f'Starting transaction on {db_name}...')\n"
+            "    try:\n"
+            "        yield\n"
+            "        print('Committing transaction!')\n"
+            "    except Exception as e:\n"
+            "        print(f'Rolling back transaction due to {e}!')\n"
+            "        raise\n\n"
+            "with transaction_scope('users_db'):\n"
+            "    print('Modifying user records...')"
+        )
+    },
+    {
+        "id": "json_handling",
+        "category": "File I/O & Context Managers",
+        "difficulty": "Beginner",
+        "question": "How do you read and write JSON in Python?",
+        "patterns": [
+            "How to read and write JSON in Python?",
+            "Difference between json.load and json.loads",
+            "Difference between json.dump and json.dumps",
+            "JSON parsing in Python",
+            "How to convert dictionary to JSON in Python?"
+        ],
+        "tags": ["json", "serialization", "deserialization", "loads", "dumps"],
+        "summary": "`json.dumps()`/`json.loads()` serialize/deserialize strings; `json.dump()`/`json.load()` read/write directly to/from file streams.",
+        "answer": (
+            "The built-in `json` module provides serialization and deserialization:\n\n"
+            "- **`json.dumps(obj)`:** Serializes Python object into a JSON string (`s` = string).\n"
+            "- **`json.loads(str)`:** Deserializes JSON string into a Python object.\n"
+            "- **`json.dump(obj, file)`:** Writes serialized JSON directly into a writable file stream.\n"
+            "- **`json.load(file)`:** Reads and parses JSON directly from a readable file stream."
+        ),
+        "code_example": (
+            "import json\n\n"
+            "data = {'user': 'Ada Lovelace', 'topics': ['Math', 'Computing'], 'active': True}\n\n"
+            "# Convert dict to formatted JSON string\n"
+            "json_str = json.dumps(data, indent=2)\n"
+            "print('JSON String:\\n', json_str)\n\n"
+            "# Parse JSON string back to dict\n"
+            "parsed = json.loads(json_str)\n"
+            "print('User name:', parsed['user'])"
+        )
+    },
+
+    # ==================== MODULES & PACKAGES ====================
+    {
+        "id": "if_name_main",
+        "category": "Modules & Environment",
+        "difficulty": "Beginner",
+        "question": "What does if __name__ == '__main__' do in Python?",
+        "patterns": [
+            "What does if __name__ == '__main__' mean?",
+            "Why use if __name__ == '__main__'?",
+            "Explain __name__ in Python",
+            "Entry point in Python script",
+            "Difference between running and importing a script"
+        ],
+        "tags": ["__name__", "__main__", "modules", "scripts", "boilerplate", "imports"],
+        "summary": "It allows a Python file to act as either an executable script or an importable module. Code inside the block executes only when run directly, not when imported.",
+        "answer": (
+            "Every Python module has a built-in variable called `__name__`.\n\n"
+            "- When a script is executed directly (`python script.py`), Python assigns `__name__ = '__main__'`. The guarded block runs.\n"
+            "- When the script is imported by another module (`import script`), `__name__` is set to the module's file name (e.g. `'script'`). The guarded block is skipped."
+        ),
+        "code_example": (
+            "def greet(name: str) -> str:\n"
+            "    return f'Hello, {name}!'\n\n"
+            "# Guarded execution block\n"
+            "if __name__ == '__main__':\n"
+            "    print('Running directly as script:')\n"
+            "    print(greet('Developer'))"
+        )
+    },
+    {
+        "id": "virtual_environments",
+        "category": "Modules & Environment",
+        "difficulty": "Beginner",
+        "question": "What is a virtual environment in Python and why should you use one?",
+        "patterns": [
+            "What is a virtual environment in Python?",
+            "Why use venv in Python?",
+            "How to create a virtual environment?",
+            "How to activate venv?",
+            "Dependency isolation in Python"
+        ],
+        "tags": ["venv", "virtualenv", "pip", "dependencies", "environment"],
+        "summary": "A virtual environment is an isolated directory tree containing a specific Python installation and packages, preventing dependency version conflicts across projects.",
+        "answer": (
+            "A **virtual environment** isolates project-specific packages so different projects with conflicting dependency versions can coexist on one computer.\n\n"
+            "### Standard Workflow:\n"
+            "1. **Create:** `python -m venv .venv`\n"
+            "2. **Activate:**\n"
+            "   - Windows PowerShell: `.venv\\Scripts\\Activate.ps1`\n"
+            "   - Linux / macOS: `source .venv/bin/activate`\n"
+            "3. **Install dependencies:** `pip install <package>`\n"
+            "4. **Freeze dependencies:** `pip freeze > requirements.txt`"
+        ),
+        "code_example": (
+            "# Bash / PowerShell commands to setup:\n"
+            "# python -m venv .venv\n"
+            "# .venv/Scripts/activate  (Windows)\n"
+            "# pip install requests scikit-learn\n"
+            "# pip freeze > requirements.txt"
+        )
+    },
+
+    # ==================== STANDARD LIBRARY HIGHLIGHTS ====================
+    {
+        "id": "collections_module",
+        "category": "Standard Library",
+        "difficulty": "Intermediate",
+        "question": "What useful data structures are in Python's collections module?",
+        "patterns": [
+            "What is in the collections module?",
+            "Explain Counter and defaultdict in Python",
+            "What is deque in Python?",
+            "What is namedtuple?",
+            "Python collections module examples"
+        ],
+        "tags": ["collections", "Counter", "defaultdict", "deque", "namedtuple", "OrderedDict"],
+        "summary": "The collections module provides specialized container datatypes: Counter, defaultdict, deque (double-ended queue), namedtuple, and OrderedDict.",
+        "answer": (
+            "The `collections` module provides enhanced alternatives to general built-in containers:\n\n"
+            "- **`Counter`:** Dict subclass for counting hashable items.\n"
+            "- **`defaultdict`:** Dict subclass calling a factory function for missing keys.\n"
+            "- **`deque`:** Double-ended queue with $O(1)$ appends and pops from both ends.\n"
+            "- **`namedtuple`:** Factory for tuples with named fields for cleaner code."
+        ),
+        "code_example": (
+            "from collections import Counter, defaultdict, deque\n\n"
+            "# Counter: Frequency analysis\n"
+            "words = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']\n"
+            "counts = Counter(words)\n"
+            "print('Most common:', counts.most_common(1))  # [('apple', 3)]\n\n"
+            "# defaultdict: Auto initialize missing keys\n"
+            "grouped = defaultdict(list)\n"
+            "grouped['fruits'].append('mango')\n"
+            "print('Grouped:', dict(grouped))"
+        )
+    },
+    {
+        "id": "itertools_and_functools",
+        "category": "Standard Library",
+        "difficulty": "Intermediate",
+        "question": "What are itertools and functools in Python?",
+        "patterns": [
+            "What is itertools in Python?",
+            "What is functools in Python?",
+            "Explain lru_cache in Python",
+            "Itertools combinations and permutations",
+            "How to memoize functions in Python?"
+        ],
+        "tags": ["itertools", "functools", "lru_cache", "combinations", "permutations", "memoization"],
+        "summary": "`itertools` produces memory-efficient iterators (chain, product, combinations). `functools` provides higher-order tools and memoization caching via `@lru_cache`.",
+        "answer": (
+            "- **`itertools`:** Functions for high-performance combinatorial and infinite iterator algebra (`cycle`, `count`, `chain`, `combinations`, `permutations`, `product`).\n"
+            "- **`functools`:** Tools for functional programming, notably:\n"
+            "  - `@lru_cache`: Automatically memoizes expensive function return values.\n"
+            "  - `partial`: Pre-fills some arguments of a function to create a new callable.\n"
+            "  - `reduce`: Cumulatively applies a function across an iterable."
+        ),
+        "code_example": (
+            "from functools import lru_cache\n"
+            "import itertools\n\n"
+            "# Memoized recursive Fibonacci with lru_cache\n"
+            "@lru_cache(maxsize=128)\n"
+            "def fib(n: int) -> int:\n"
+            "    if n < 2:\n"
+            "        return n\n"
+            "    return fib(n - 1) + fib(n - 2)\n\n"
+            "print('Fib(35):', fib(35))\n\n"
+            "# Combinations with itertools\n"
+            "combos = list(itertools.combinations(['A', 'B', 'C'], 2))\n"
+            "print('Combinations:', combos)  # [('A', 'B'), ('A', 'C'), ('B', 'C')]"
+        )
+    },
+    {
+        "id": "regular_expressions_re",
+        "category": "Standard Library",
+        "difficulty": "Intermediate",
+        "question": "How do you use regular expressions (re module) in Python?",
+        "patterns": [
+            "How to use regular expressions in Python?",
+            "What is re module in Python?",
+            "Difference between re.match and re.search",
+            "How to find patterns in strings using regex?",
+            "Explain re.findall and re.sub"
+        ],
+        "tags": ["regex", "re", "pattern-matching", "search", "match", "findall", "sub"],
+        "summary": "Python's `re` module supports regex operations: `re.search` (anywhere in string), `re.match` (beginning only), `re.findall` (all matches), and `re.sub` (replace).",
+        "answer": (
+            "The `re` module enables advanced string pattern matching:\n\n"
+            "- **`re.search(pattern, text)`:** Scans through string looking for the first location where the regex matches.\n"
+            "- **`re.match(pattern, text)`:** Checks for a match *only at the beginning* of the string.\n"
+            "- **`re.findall(pattern, text)`:** Returns all non-overlapping matches as a list of strings.\n"
+            "- **`re.sub(pattern, replacement, text)`:** Replaces matched patterns with new text.\n\n"
+            "> **Tip:** Use raw strings `r'\\d+'` so backslashes aren't treated as Python string escape characters."
+        ),
+        "code_example": (
+            "import re\n\n"
+            "text = 'Contact support@example.com or sales@company.org for help.'\n\n"
+            "# Extract email addresses\n"
+            "email_pattern = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+'\n"
+            "emails = re.findall(email_pattern, text)\n"
+            "print('Extracted emails:', emails)\n\n"
+            "# Replace domains\n"
+            "anonymized = re.sub(email_pattern, '[PROTECTED EMAIL]', text)\n"
+            "print('Anonymized:', anonymized)"
+        )
+    },
+    {
+        "id": "pathlib_module",
+        "category": "Standard Library",
+        "difficulty": "Beginner",
+        "question": "How to handle file paths using pathlib in Python?",
+        "patterns": [
+            "How to use pathlib in Python?",
+            "pathlib vs os.path",
+            "Modern file path handling in Python",
+            "How to check if file exists with pathlib?",
+            "Path manipulation in Python"
+        ],
+        "tags": ["pathlib", "Path", "files", "paths", "filesystem", "cross-platform"],
+        "summary": "`pathlib.Path` offers an object-oriented, cross-platform approach to filesystem paths, replacing legacy `os.path` functions.",
+        "answer": (
+            "`pathlib` (introduced in Python 3.4) treats paths as proper objects rather than bare strings.\n\n"
+            "### Common Operations:\n"
+            "- Path construction: `Path('folder') / 'file.txt'` (using the division operator `/`).\n"
+            "- Existence: `p.exists()`, `p.is_file()`, `p.is_dir()`.\n"
+            "- Reading/Writing: `p.read_text()`, `p.write_text('content')`.\n"
+            "- Properties: `p.name`, `p.stem`, `p.suffix`, `p.parent`."
+        ),
+        "code_example": (
+            "from pathlib import Path\n\n"
+            "p = Path('data') / 'report.csv'\n"
+            "print('Full Path:', p)\n"
+            "print('File name:', p.name)      # report.csv\n"
+            "print('Extension:', p.suffix)    # .csv\n"
+            "print('Parent folder:', p.parent) # data"
+        )
+    },
+
+    # ==================== CONCURRENCY & MEMORY ====================
+    {
+        "id": "gil_in_python",
+        "category": "Concurrency & Performance",
+        "difficulty": "Advanced",
+        "question": "What is the Global Interpreter Lock (GIL) in Python?",
+        "patterns": [
+            "What is the GIL in Python?",
+            "Explain Global Interpreter Lock",
+            "Why does Python have a GIL?",
+            "How does GIL affect multithreading?",
+            "Can Python achieve true parallelism?"
+        ],
+        "tags": ["gil", "global-interpreter-lock", "concurrency", "cpython", "threads", "multiprocessing"],
+        "summary": "The GIL is a mutex in CPython that ensures only one native thread executes Python bytecode at any given moment, simplifying memory management.",
+        "answer": (
+            "The **Global Interpreter Lock (GIL)** is a mutual exclusion lock used by CPython to prevent multiple native OS threads from executing Python bytecodes concurrently.\n\n"
+            "### Why does it exist?\n"
+            "- CPython's memory management is not thread-safe by default. Reference counting could suffer race conditions without synchronization.\n"
+            "- Simplifies integration with C libraries that are not thread-safe.\n\n"
+            "### Implications:\n"
+            "- **CPU-bound tasks:** Multithreading does NOT achieve speedups in CPython due to the GIL; use the `multiprocessing` module instead to spawn separate OS processes with distinct GILs.\n"
+            "- **I/O-bound tasks:** Multithreading or `asyncio` works great because threads release the GIL while waiting on network or disk I/O."
+        ),
+        "code_example": (
+            "# For CPU-bound tasks, use multiprocessing to bypass the GIL:\n"
+            "# from multiprocessing import Pool\n"
+            "# with Pool() as p:\n"
+            "#     results = p.map(heavy_cpu_function, data_list)\n\n"
+            "# For I/O-bound tasks, threading or asyncio is ideal:\n"
+            "import concurrent.futures\n"
+            "import time\n\n"
+            "def fetch_data(task_id):\n"
+            "    time.sleep(0.1)  # Simulates I/O wait (releases GIL)\n"
+            "    return f'Task {task_id} completed'\n\n"
+            "with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:\n"
+            "    results = list(executor.map(fetch_data, [1, 2, 3]))\n"
+            "print(results)"
+        )
+    },
+    {
+        "id": "threading_vs_multiprocessing_vs_asyncio",
+        "category": "Concurrency & Performance",
+        "difficulty": "Advanced",
+        "question": "What is the difference between Threading, Multiprocessing, and Asyncio in Python?",
+        "patterns": [
+            "Threading vs Multiprocessing vs Asyncio",
+            "Difference between threads and processes in Python",
+            "When to use asyncio vs threading?",
+            "Concurrency models in Python",
+            "Asyncio vs Threading in Python"
+        ],
+        "tags": ["asyncio", "threading", "multiprocessing", "concurrency", "parallelism"],
+        "summary": "Threading is for I/O-bound tasks sharing memory; Multiprocessing is for CPU-bound tasks running in separate processes; Asyncio uses cooperative single-threaded event loops.",
+        "answer": (
+            "### Comparison Matrix:\n"
+            "| Model | Execution | GIL Impact | Best Used For |\n"
+            "| :--- | :--- | :--- | :--- |\n"
+            "| **`threading`** | Preemptive multitasking (threads share memory) | Limited by GIL (1 thread at a time for CPU) | I/O-bound legacy tasks, background workers |\n"
+            "| **`multiprocessing`** | Separate OS processes (isolated memory) | Bypasses GIL (true multi-core parallelism) | Heavy CPU computation, ML data pipelines |\n"
+            "| **`asyncio`** | Cooperative multitasking (single-threaded event loop) | Single thread (GIL irrelevant) | Highly concurrent I/O (thousands of web sockets/HTTP calls) |"
+        ),
+        "code_example": (
+            "import asyncio\n\n"
+            "async def fetch_web_resource(service_id: int):\n"
+            "    print(f'Starting fetch {service_id}')\n"
+            "    await asyncio.sleep(0.1)  # Non-blocking pause\n"
+            "    return f'Result from {service_id}'\n\n"
+            "async def main():\n"
+            "    # Run 3 coroutines concurrently\n"
+            "    results = await asyncio.gather(\n"
+            "        fetch_web_resource(1),\n"
+            "        fetch_web_resource(2),\n"
+            "        fetch_web_resource(3)\n"
+            "    )\n"
+            "    print('Async results:', results)\n\n"
+            "# Run the event loop\n"
+            "asyncio.run(main())"
+        )
+    },
+    {
+        "id": "memory_management_and_gc",
+        "category": "Concurrency & Performance",
+        "difficulty": "Advanced",
+        "question": "How does memory management and garbage collection work in Python?",
+        "patterns": [
+            "How does garbage collection work in Python?",
+            "Memory management in Python",
+            "What is reference counting in Python?",
+            "How Python frees memory",
+            "Cyclic garbage collector in Python"
+        ],
+        "tags": ["garbage-collection", "memory-management", "reference-counting", "gc", "cycles"],
+        "summary": "Python manages memory via private heaps using Reference Counting as the primary mechanism, augmented by a cyclic generational garbage collector (gc module).",
+        "answer": (
+            "Python's memory manager handles dynamic allocation via private heaps.\n\n"
+            "### 1. Reference Counting (Primary):\n"
+            "- Every object tracks how many references point to it (`sys.getrefcount()`).\n"
+            "- When an object's reference count drops to 0, its memory is reclaimed immediately.\n\n"
+            "### 2. Generational Garbage Collector (Secondary):\n"
+            "- Handles **reference cycles** (e.g. Object A points to Object B and Object B points to Object A).\n"
+            "- Divides objects into 3 generations (0, 1, 2) based on survival through collections. Younger generations are collected more frequently."
+        ),
+        "code_example": (
+            "import sys\n"
+            "import gc\n\n"
+            "# Reference counting observation\n"
+            "sample = ['data']\n"
+            "# getrefcount includes temporary reference passed to the function itself\n"
+            "print('Ref count:', sys.getrefcount(sample) - 1)  # 1\n\n"
+            "# Force garbage collection manually\n"
+            "unreachable = gc.collect()\n"
+            "print('Unreachable objects cleared:', unreachable)"
+        )
+    },
+
+    # ==================== COMMON BUILT-IN FUNCTIONS ====================
+    {
+        "id": "map_filter_zip",
+        "category": "Built-in Functions",
+        "difficulty": "Beginner",
+        "question": "How do map, filter, and zip work in Python?",
+        "patterns": [
+            "How to use map, filter, zip in Python?",
+            "What is zip function in Python?",
+            "Difference between map and filter",
+            "How does map() work in Python?",
+            "Iterating two lists together in Python"
+        ],
+        "tags": ["map", "filter", "zip", "built-in", "functional", "iteration"],
+        "summary": "`map` transforms elements using a function; `filter` retains elements matching a predicate; `zip` aggregates elements from multiple iterables pairwise.",
+        "answer": (
+            "- **`map(func, iterable)`:** Lazily applies `func` to every item in `iterable`.\n"
+            "- **`filter(func, iterable)`:** Lazily yields only items for which `func(item)` evaluates to `True`.\n"
+            "- **`zip(*iterables)`:** Lazily pairs elements from iterables at corresponding indices, stopping at the shortest."
+        ),
+        "code_example": (
+            "names = ['Alice', 'Bob', 'Charlie']\n"
+            "scores = [85, 92, 78]\n\n"
+            "# zip: Combine pairwise\n"
+            "paired = list(zip(names, scores))\n"
+            "print('Paired:', paired)  # [('Alice', 85), ('Bob', 92), ('Charlie', 78)]\n\n"
+            "# map: Transform elements\n"
+            "doubled = list(map(lambda x: x * 2, scores))\n"
+            "print('Doubled scores:', doubled)\n\n"
+            "# filter: Select elements\n"
+            "high_scores = list(filter(lambda s: s >= 85, scores))\n"
+            "print('High scores:', high_scores)"
+        )
+    },
+    {
+        "id": "enumerate_and_range",
+        "category": "Built-in Functions",
+        "difficulty": "Beginner",
+        "question": "How do enumerate() and range() work in Python?",
+        "patterns": [
+            "How to use enumerate in Python?",
+            "What does range() do?",
+            "How to loop with index in Python?",
+            "Explain enumerate with example",
+            "range start stop step in Python"
+        ],
+        "tags": ["enumerate", "range", "loops", "index", "iteration"],
+        "summary": "`range()` generates a sequence of integers with start, stop, and step; `enumerate()` adds a counter to an iterable, yielding (index, item) pairs.",
+        "answer": (
+            "- **`range(start, stop[, step])`:** An immutable arithmetic sequence object generating numbers on-the-fly without holding them in memory.\n"
+            "- **`enumerate(iterable, start=0)`:** Avoids awkward manual index counters by yielding `(index, item)` tuples during iteration."
+        ),
+        "code_example": (
+            "languages = ['Python', 'Rust', 'Go']\n\n"
+            "# Loop with 1-based index using enumerate\n"
+            "for index, lang in enumerate(languages, start=1):\n"
+            "    print(f'{index}. {lang}')\n\n"
+            "# range with step\n"
+            "evens = list(range(0, 10, 2))\n"
+            "print('Evens:', evens)  # [0, 2, 4, 6, 8]"
+        )
+    },
+    {
+        "id": "any_and_all",
+        "category": "Built-in Functions",
+        "difficulty": "Beginner",
+        "question": "How do any() and all() functions work in Python?",
+        "patterns": [
+            "What is any() and all() in Python?",
+            "Difference between any and all",
+            "Check if any element matches condition in Python",
+            "Check if all elements match in Python",
+            "Short circuit evaluation with any and all"
+        ],
+        "tags": ["any", "all", "built-in", "boolean", "logic", "short-circuit"],
+        "summary": "`any()` returns True if at least one element is truthy; `all()` returns True only if every element is truthy (with short-circuit evaluation).",
+        "answer": (
+            "- **`any(iterable)`:** Returns `True` if at least one element of the iterable evaluates to `True`. Returns `False` on empty iterables.\n"
+            "- **`all(iterable)`:** Returns `True` if every element evaluates to `True` (or if the iterable is empty - vacuous truth).\n\n"
+            "Both short-circuit: `any()` stops on the first `True`, and `all()` stops on the first `False`."
+        ),
+        "code_example": (
+            "numbers = [2, 4, 6, 8, 10]\n\n"
+            "# Check if all are even\n"
+            "all_even = all(n % 2 == 0 for n in numbers)\n"
+            "print('All even?', all_even)  # True\n\n"
+            "# Check if any is greater than 9\n"
+            "has_large = any(n > 9 for n in numbers)\n"
+            "print('Any > 9?', has_large)  # True"
+        )
+    }
+]
+
+def build_kb():
+    output_path = Path("data/python_kb.json")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(KNOWLEDGE_BASE, f, indent=2, ensure_ascii=False)
+    print(f"Successfully generated {len(KNOWLEDGE_BASE)} knowledge base entries at {output_path}")
+
+if __name__ == "__main__":
+    build_kb()
